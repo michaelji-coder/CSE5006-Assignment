@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* 1. Light Mode Defaults */
+:root {
+  --background: #ffffff !important;
+  --foreground: #171717 !important;
+}
+
+/* 2. Dark Mode Overrides - Using html prefix for max specificity */
+html[data-theme="dark"],
+[data-theme="dark"] {
+  --background: #3a3939 !important;
+  --foreground: #ededed !important;
+}
+
+/* 3. Force body to consume variables */
+html, body {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  text-indent: 20px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  min-height: 100vh;
+}
+
+/* 4. Fix elements where Bootstrap forces a background color */
+[data-theme="dark"] .bg-dark,
+[data-theme="dark"] .bg-light,
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] header,
+[data-theme="dark"] nav,
+[data-theme="dark"] footer {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}

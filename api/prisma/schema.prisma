@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model RssFeed {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String
+  author      String
+  imageUrl    String?
+  link        String?      @default("http://localhost:3000")
+  createdAt   DateTime     @default(now())
+  
+  requests    RequestLog[]
+}
+
+model RequestLog {
+  id        Int      @id @default(autoincrement())
+  clientId  String   
+  feedId    Int?
+  feed      RssFeed? @relation(fields: [feedId], references: [id], onDelete: SetNull)
+  endpoint  String   
+  status    Int      
+  timestamp DateTime @default(now())
+}
