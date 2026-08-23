@@ -1,8 +1,37 @@
-
-# Playwright
+# Dependencies
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
+.pnpm-store/
+
+# Next.js build output
+.next/
+out/
+build/
+dist/
+
+# Environment and Local DB
+.env
+.env.local
+*.db
+*.sqlite
+*.sqlite-journal
+*.db-journal
+
+# Local dynamic data files
+frontend/data/blogs.json
+frontend/data/counter.json
+
+# Media files (prevents pushing large video files)
+*.mp4
+
+# Playwright & Testing artifacts
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+*.jtl
+load_test_report/
+
+# System / IDE
+.DS_Store
+.vscode/
+.idea/
