@@ -6,4 +6,4 @@ Dockerfile
 .vscode
 .env
 *.sqlite
-data/
+# data/
