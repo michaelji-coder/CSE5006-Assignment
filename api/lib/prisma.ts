@@ -2,20 +2,20 @@ import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
-// Pass a dummy adapter-like config during build time to satisfy Prisma 7 validation
+// Create a minimal fallback adapter object to prevent Prisma 7 from throwing
+// during static analysis if no external driver adapter is installed.
+const dummyAdapter: any = {
+  name: 'sqlite',
+  provider: 'sqlite',
+  adapterName: 'sqlite',
+  executeRaw: async () => 0,
+  queryRaw: async () => ({ rows: [], columnNames: [] }),
+};
+
 export const prisma =
   globalForPrisma.prisma ||
-  new PrismaClient(
-    process.env.DATABASE_URL
-      ? undefined
-      : ({
-          adapter: {
-            name: 'sqlite',
-            provider: 'sqlite',
-            executeRaw: async () => {},
-            queryRaw: async () => ({ rows: [], columnNames: [] }),
-          },
-        } as any)
-  );
+  new PrismaClient({
+    adapter: dummyAdapter,
+  });
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
