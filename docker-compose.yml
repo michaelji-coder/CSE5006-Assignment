@@ -4,7 +4,7 @@ services:
       context: ./api
       dockerfile: Dockerfile
     environment:
-      - DATABASE_URL=file:./dev.db
+      - DATABASE_URL=file:/app/prisma/dev.db
     volumes:
       - sqlite_data:/app/prisma
 
@@ -13,7 +13,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      - NEXT_PUBLIC_API_URL=http://api:3000
+      - NEXT_PUBLIC_API_URL=/api
     depends_on:
       - api
 

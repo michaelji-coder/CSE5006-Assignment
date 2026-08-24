@@ -2,18 +2,20 @@ FROM node:22-alpine
 
 WORKDIR /app
 
+# Install build dependencies for native C++ addons like better-sqlite3
+RUN apk add --no-cache python3 make g++
+
 COPY package*.json ./
+
 RUN npm ci
 
 COPY . .
 
-# Set a fallback SQLite URL for the build step
-ENV DATABASE_URL="file:./dev.db"
-
+# Generate Prisma Client during build
 RUN npx prisma generate
 
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 4000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
